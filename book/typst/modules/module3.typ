@@ -205,7 +205,7 @@ and dashed) along with the old estimates (dotted).
 == Component and Phase Spaces
 
 The graphs above are called _component graphs_. They show the dependent variables (the populations
-of ants and aphids) vs. the independent variable (time).#footnote[It is actually composed of two
+of ants and aphids) vs. the independent variable (time).#footnote[Each is actually composed of two
   component graphs, one for the ants and one for the aphids.]
 
 However, we often want to consider the relationship _between the dependent variables_. In this
@@ -220,7 +220,7 @@ example, we might plot the population of ants vs. the population of aphids.
     yaxis: (position: left, tip: tiptoe.stealth),
     xaxis: (position: bottom, tip: tiptoe.stealth),
     xlabel: [\# Ants\ (thousands)],
-    ylabel: [\# Aphids\ (thousands)],
+    ylabel: [\# Aphids #h(0.75em)\ (thousands)],
     lq.plot(
       ants,
       aphids,
@@ -281,7 +281,7 @@ As you may have noticed in the above definition, phase space is not limited to t
     #let y = soln.map(v => v.at(1))
     #let z = soln.map(v => v.at(2))
 
-    #import "@preview/plotsy-3d:0.1.0": plot-3d-parametric-curve
+    #import "@preview/plotsy-3d:0.2.0": plot-3d-parametric-curve
 
     #let xfunc(t) = x.at(int(t))
     #let yfunc(t) = y.at(int(t))
@@ -294,16 +294,16 @@ As you may have noticed in the above definition, phase space is not limited to t
         yfunc,
         zfunc,
         subdivisions: 1, //number of line segments per unit
-        scale_dim: (0.01, 0.01, 0.01), // relative and global scaling
+        scale-dim: (0.01, 0.01, 0.01), // relative and global scaling
         tdomain: (0, steps),
         // axis_step: (5,5,5), // adjust distance between x, y, z number labels
-        dot_thickness: 0.02em,
-        front_axis_thickness: 0.0em,
-        rear_axis_dot_scale: (0.08, 0.08),
-        rear_axis_text_size: 0.5em,
-        // axis_label_size: 1.5em,
-        rotation_matrix: ((-.5, 1, 4), (0, -1, 1)),
-        axis_label_offset: (1, .6, .5),
+        dot-thickness: 0.02em,
+        front-axis-thickness: 0.0em,
+        rear-axis-dot-scale: (0.08, 0.08),
+        rear-axis-text-size: 0.5em,
+        //axis-label-size: 1.5em,
+        rotation-matrix: ((-.5, 1, 4), (0, -1, 1)),
+        axis-label-offset: (1, .6, .5),
         // matrix transform-rotate-dir() from cetz
       ),
     )
@@ -349,15 +349,17 @@ As you may have noticed in the above definition, phase space is not limited to t
 
 === When to use Phase Plots and Component Graphs
 
-Component graphs are almost always useful, but by their nature, they help you visualize how
-quantities change over time. When quantities are interrelated, plots in phase space help reveal the
-relationships. Additionally, phase plots should only be used when studying *autonomous* systems of
-differential equations.
 
-Why only use phase plots for autonomous systems? By definition, phase space does not include the
-independent variable (usually time). For autonomous equations, you can pick any point along a
-solution curve to represent "time zero". This makes phase plots for autonomous systems easy to
-interpret. For non-autonomous systems, the exact time (i.e., whether it is time $0$ or time $1$,
-etc.) matters. But phase plots have no way to encode time information, so you end up with a plot
-that loses so much information, it's rarely useful.
+Component graphs are almost always useful, helping to visualize how quantities change over time,
+however relationships between quantities can be hard to see from component graphs. When quantities
+are interrelated, plots in _phase space_ help reveal their relationships.
+
+However, phase plots should only be used when studying *autonomous* systems of differential
+equations. Why? Because, by definition, phase space does not include the independent variable
+(usually time). For autonomous equations, you can pick any point along a solution curve to represent
+"time zero". This makes phase plots for autonomous systems easy to interpret. For non-autonomous
+systems, the exact time (i.e., whether it is time $0$ or time $1$, etc.) matters. But phase plots
+have no way to encode time information, so you end up with a plot that loses so much information,
+it's rarely useful.
+
 
