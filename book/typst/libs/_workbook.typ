@@ -604,7 +604,39 @@
 /// - questions ( ((statement: content, solution: content | none, citation: content | none),) ): A list of questions (possibly with solutions).
 #let exercises(questions, module_number: 0) = {
   [== Practice Problems]
-  columns(2, enum(..questions.map(q => enum.item(q.statement))))
+  let module_enum_set_args = (
+    numbering: (..n) => {
+      let depth = n.pos().len()
+      // We manually create the markers for the highest level of enum, so we skip the "1." marker.
+      let marker = ("(a)", "i.", "A.", "I.").at(depth - 1, default: "(1)")
+      numbering(marker, n.at(-1))
+    },
+    indent: 5pt,
+    full: true,
+  )
+  set enum(..module_enum_set_args)
+  counter(footnote).update(0)
+  columns(
+    2,
+    questions
+      .enumerate()
+      .map(((i, q)) => (
+        {
+          show: block.with(inset: (left: 1.5em))
+          {
+            show: place.with(top)
+            show: move.with(dx: -1.5em)
+            [#(i + 1).]
+            if q.at("citation", default: none) != none {
+              show: footnote.with(numbering: "*")
+              text(fill: blue, [#q.citation])
+            }
+          }
+          q.statement
+        }
+      ))
+      .join(),
+  )
 }
 
 /// Display solutions for exercises.
